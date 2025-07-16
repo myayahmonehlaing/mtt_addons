@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_consignment_report_xlsx" model="ir.actions.report">
+        <field name="name">Consignment Report XLSX</field>
+        <field name="model">assign.consignment</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">assign_consignment.consignment_report_data</field>
+        <field name="report_file">assign_consignment.consignment_report_data</field>
+        <field name="print_report_name">'Consignment - %s' % (object.name)</field>
+<!--        <field name="binding_model_id" ref="model_assign_consignment"/>-->
+<!--        <field name="binding_type">report</field>-->
+    </record>
+</odoo>

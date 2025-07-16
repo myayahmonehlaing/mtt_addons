@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_inherit_consignment" model="ir.ui.view">
+            <field name="name">res.config.settings.inherit.consignment</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id"
+                   ref="sale.res_config_settings_view_form"/> <!-- Adjust if inheriting another module -->
+            <field name="arch" type="xml">
+                <!-- Add inside the Shipping block -->
+                <xpath expr="//block[@name='sale_shipping_setting_container']" position="inside">
+                    <setting id="consignment_warehouse" string="Consignment Warehouse">
+                        <field name="consignment_warehouse_id"/>
+                        <field name="consignment_location_id" invisible="1"/>
+                        <div class="text-muted">
+                            Warehouse containing the consignment stock location
+                        </div>
+                    </setting>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_assign_consignment,assign.consignment,model_assign_consignment,base.group_user,1,1,1,1
+access_assign_consignment_line,assign.consignment.line,model_assign_consignment_line,base.group_user,1,1,1,1
+access_consignment_report_wizard,consignment.report.wizard.access,model_consignment_report_wizard,base.group_user,1,1,1,1
+access_consignment_pivot_data,consignment.pivot.data.access,model_consignment_pivot_data,base.group_user,1,1,1,1

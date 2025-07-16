@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="view_move_form_inherit_department" model="ir.ui.view">
+            <field name="name">account.move.form.inherit.department</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//header/button[@name='action_post'][1]" position="replace">
+                    <button name="action_post" string="Post" class="oe_highlight"
+                            type="object"
+                            groups="base.group_system,account.group_account_invoice,assign_security_department_document.group_department_accounting"
+                            data-hotkey="q"
+                            context="{'validate_analytic': True, 'disable_abnormal_invoice_detection': False}"
+                            invisible="hide_post_button or move_type != 'entry'"/>
+                </xpath>
+
+                <xpath expr="//header/button[@name='action_post'][2]" position="replace">
+                    <button name="action_post" string="Confirm" class="oe_highlight"
+                            type="object"
+                            groups="base.group_system,account.group_account_invoice,assign_security_department_document.group_department_accounting"
+                            data-hotkey="q"
+                            context="{'validate_analytic': True, 'disable_abnormal_invoice_detection': False}"
+                            invisible="hide_post_button or move_type == 'entry' or display_inactive_currency_warning"/>
+                </xpath>
+
+                <xpath expr="//header/button[@name='button_cancel'][1]" position="replace">
+                    <button name="button_cancel" string="Cancel Entry" type="object"
+                            groups="base.group_system,account.group_account_invoice,assign_security_department_document.group_department_accounting"
+                            data-hotkey="x"
+                            invisible="not id or state != 'draft' or move_type != 'entry'"/>
+                </xpath>
+
+                <xpath expr="//header/button[@name='button_cancel'][2]" position="replace">
+                    <button name="button_cancel" string="Cancel" type="object"
+                            groups="base.group_system,account.group_account_invoice,assign_security_department_document.group_department_accounting"
+                            data-hotkey="x"
+                            invisible="not id or state != 'draft' or move_type == 'entry'"/>
+                </xpath>
+
+<!--                <xpath expr="//header/button[@name='action_register_payment'][1]" position="replace">-->
+<!--                    <button name="action_register_payment" id="account_invoice_payment_btn"-->
+<!--                            type="object" class="oe_highlight"-->
+<!--                            invisible="(-->
+<!--                                state != 'posted'-->
+<!--                                or payment_state not in ('not_paid', 'partial', 'in_payment')-->
+<!--                                or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt')-->
+<!--                                or invoice_has_outstanding-->
+<!--                            )"-->
+<!--                            context="{'dont_redirect_to_payments': True, 'display_account_trust': True}"-->
+<!--                            string="Pay" data-hotkey="g"-->
+<!--                            groups="base.group_system,account.group_account_invoice,assign_security_department_document.group_department_accounting"/>-->
+<!--                </xpath>-->
+
+<!--                <xpath expr="//header/button[@name='action_reverse']" position="replace">-->
+<!--                    <button name="action_reverse" string='Credit Note'-->
+<!--                            type='object'-->
+<!--                            groups="base.group_system,account.group_account_invoice,assign_security_department_document.group_department_accounting"-->
+<!--                            invisible="move_type not in ('out_invoice', 'in_invoice') or state != 'posted'"-->
+<!--                            data-hotkey="shift+n"/>-->
+<!--                </xpath>-->
+
+<!--                <xpath expr="//header/button[@name='button_draft']" position="replace">-->
+<!--                    <button name="button_draft" string="Reset to Draft" type="object"-->
+<!--                            groups="base.group_system,account.group_account_invoice,assign_security_department_document.group_department_accounting"-->
+<!--                            invisible="not show_reset_to_draft_button" data-hotkey="r"/>-->
+<!--                </xpath>-->
+
+
+            </field>
+        </record>
+    </data>
+</odoo>

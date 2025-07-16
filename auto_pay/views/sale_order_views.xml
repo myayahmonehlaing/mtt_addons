@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inherit_sale_view_order_form" model="ir.ui.view">
+        <field name="name">sale.view.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_open_payment_wizard"
+                        string="Pay"
+                        type="object"
+                        class="oe_highlight"
+                        invisible="state != 'sale'"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="inherit_sale_order_form_payment_stat_button" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.payment.stat.button</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Find the stat button div -->
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <!-- Payments Stat Button -->
+                <button name="action_view_payments"
+                        string="Payments"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-bars"
+                        invisible="payment_count == 0"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

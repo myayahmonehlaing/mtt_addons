@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_consignment" model="ir.ui.view">
+        <field name="name">sale.order.form.consignment</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="consignment_id"
+                       widget="selection"
+                       options="{'no_create': True}"
+                       readonly="state != 'draft'"/>
+            </xpath>
+            <!--            <xpath expr="//field[@name='pricelist_id']" position="after">-->
+            <!--                <field name="has_invalid_quantities" invisible="1"/>-->
+            <!--            </xpath>-->
+            <!--            &lt;!&ndash; Modify the confirm button to be invisible if has_invalid_quantities is true &ndash;&gt;-->
+            <!--            <xpath expr="//button[@name='action_confirm']" position="attributes">-->
+            <!--                <attribute name="invisible">-->
+            <!--                    ['|', ('state', '!=', 'draft'), ('has_invalid_quantities', '=', True)]-->
+            <!--                </attribute>-->
+            <!--            </xpath>-->
+        </field>
+    </record>
+</odoo>

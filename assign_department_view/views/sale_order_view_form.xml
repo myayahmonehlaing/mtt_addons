@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <!--        quotation,order,list view-->
+        <record id="inherit_department_sale_onboard" model="ir.ui.view">
+            <field name="name">sale.order.main.form.inherit.department</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_list_upload"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="department_id" string="Department"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_department_sale_list" model="ir.ui.view">
+            <field name="name">sale.order.main.form.inherit.department.list</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="department_id" string="Department"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        inside form view-->
+        <record id="inherit_department_sale_quotation_form" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.department.quotation.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='order_details']/field[@name='payment_term_id']" position="after">
+                    <field name="department_id" string="Department"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        inside draft view-->
+        <record id="inherit_department_account_move_form" model="ir.ui.view">
+            <field name="name">account.move.form.inherit.add.department</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_shipping_id']" position="before">
+
+                    <field name="department_id"/> <!-- label won't appear -->
+
+                </xpath>
+            </field>
+        </record>
+
+        <!--        pdf report for order-->
+        <template id="report_saleorder_document_inherit_order_type" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//t[@t-set='forced_vat']" position="after">
+                <p>
+                    <strong>Department:</strong>
+                    <t t-esc="doc.department_id.name"/>
+                </p>
+            </xpath>
+        </template>
+
+        <!--        pdf report for invoice-->
+        <template id="report_invoice_document" inherit_id="account.report_invoice_document">
+            <xpath expr="//t[@t-set='forced_vat']" position="after">
+                <p>
+                    <strong>Department:</strong>
+                    <t t-esc="o.department_id.name"/>
+                </p>
+            </xpath>
+        </template>
+
+        <!--        <record id="view_order_pivot_inherit_department" model="ir.ui.view">-->
+        <!--            <field name="name">sale.order.pivot.inherit.department</field>-->
+        <!--            <field name="model">sale.order</field>-->
+        <!--            <field name="inherit_id" ref="sale.view_sale_order_pivot"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//field[@name='date_order']" position="after">-->
+        <!--                    <field name="department_id"/>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+        <!--        sale.report , under smart button report view-->
+        <record id="view_sale_report_pivot_inherit" model="ir.ui.view">
+            <field name="name">sale.report.pivot.inherit</field>
+            <field name="model">sale.report</field>
+            <field name="inherit_id" ref="sale.view_order_product_pivot"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='team_id']" position="before">
+                    <field name="department_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_report_view_tree_inherit" model="ir.ui.view">
+            <field name="name">sale.report.tree.inherit</field>
+            <field name="model">sale.report</field>
+            <field name="inherit_id" ref="sale.sale_report_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="before">
+                    <field name="department_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

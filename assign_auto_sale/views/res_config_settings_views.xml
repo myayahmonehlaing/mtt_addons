@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit_auto_features" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.auto.features</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add Auto Shipping checkbox inside the Shipping block -->
+            <xpath expr="//block[@name='sale_shipping_setting_container']" position="inside">
+                <setting string="Auto Shipping" help="Automatically process shipping when order is confirmed">
+                    <field name="auto_shipping"/>
+                </setting>
+            </xpath>
+
+            <!-- Add Auto Create Invoice checkbox inside the Invoicing block -->
+            <xpath expr="//block[@name='invoicing_setting_container']" position="inside">
+                <setting string="Auto Create Invoice" help="Automatically create invoice when order is confirmed">
+                    <field name="auto_create_invoice"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

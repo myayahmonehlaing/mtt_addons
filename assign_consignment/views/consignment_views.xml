@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <menuitem id="menu_consignment_root"
+              name="Consignment"
+              parent="sale.sale_order_menu"
+              sequence="50"/>
+
+    <record id="action_consignment" model="ir.actions.act_window">
+        <field name="name">Consignment</field>
+        <field name="res_model">assign.consignment</field>
+        <field name="view_mode">list,form,kanban,search,calendar,pivot,graph</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Consignment!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_consignment"
+              name="Consignments"
+              parent="menu_consignment_root"
+              action="action_consignment"
+              sequence="10"/>
+    <!--    list view-->
+    <record id="consignment_view_list" model="ir.ui.view">
+        <field name="name">consignment.list</field>
+        <field name="model">assign.consignment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="date"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!--    form view-->
+    <record id="consignment_view_form" model="ir.ui.view">
+        <field name="name">consignment.form</field>
+        <field name="model">assign.consignment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button type="object"
+                            name="action_confirm"
+                            string="Confirm"
+                            class="oe_highlight"
+                            invisible="state != 'draft'"
+                    />
+                    <button type="object"
+                            name="action_close"
+                            string="Close"
+                            class="oe_highlight"
+                            invisible="state != 'confirm'"
+                    />
+
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button class="oe_stat_button"
+                                name="action_view_picking"
+                                type="object"
+                                icon="fa-truck"
+                                invisible="picking_id == 0">
+                            <field string="Internal Transfer" name="transfer_count" widget="statinfo"/>
+                        </button>
+
+                        <!--                        added-->
+                        <button class="oe_stat_button"
+                                name="action_view_sales_orders"
+                                type="object"
+                                icon="fa-shopping-cart"
+                                invisible="sale_order_count == 0">
+                            <field string="Sales Orders" name="sale_order_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="date" readonly="state != 'draft'"/>
+                            <field name="picking_type_id" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Order Lines">
+                            <field name="order_line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="amount_sold"/>
+                                    <field name="remaining_qty" readonly="1"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_total"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="amount_total" widget="monetary" string="Amount Total"/>
+                            </group>
+                        </page>
+
+                        <page string="Other Info">
+                            <group>
+                                <group>
+                                    <field name="user_id"/>
+                                    <field name="team_id"/>
+                                </group>
+                                <group>
+                                    <field name="company_id"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    search view-->
+    <record id="view_assign_consignment_search" model="ir.ui.view">
+        <field name="name">assign.consignment.search</field>
+        <field name="model">assign.consignment</field>
+        <field name="arch" type="xml">
+            <search string="Consignments">
+                <!-- Standard fields -->
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="date"/>
+
+                <separator/>
+
+                <!-- Group by filters -->
+                <group expand="0" string="Group By">
+                    <filter string="Customer" name="group_by_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Date" name="group_by_date" context="{'group_by': 'date'}"/>
+                    <filter string="Salesperson" name="group_by_user" context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <!--    calendar view-->
+    <record id="view_assign_consignment_calendar" model="ir.ui.view">
+        <field name="name">assign.consignment.calendar</field>
+        <field name="model">assign.consignment</field>
+        <field name="arch" type="xml">
+            <calendar string="Consignments" date_start="date" color="partner_id">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+            </calendar>
+        </field>
+    </record>
+
+
+    <!--    pivot view-->
+    <record id="view_assign_consignment_pivot" model="ir.ui.view">
+        <field name="name">assign.consignment.pivot</field>
+        <field name="model">assign.consignment</field>
+        <field name="arch" type="xml">
+            <pivot string="Consignment Analysis">
+                <field name="partner_id" type="row"/>
+                <field name="user_id" type="col"/>
+                <field name="date" type="col"/>
+                <field name="amount_total" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+
+    <!--    graph view-->
+
+    <record id="view_assign_consignment_graph" model="ir.ui.view">
+        <field name="name">assign.consignment.graph</field>
+        <field name="model">assign.consignment</field>
+        <field name="arch" type="xml">
+            <graph string="Consignment Statistics" type="bar">
+                <field name="date" type="row"/>
+                <field name="partner_id" type="col"/>
+                <field name="user_id" type="col"/>
+                <field name="amount_total" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+
+</odoo>

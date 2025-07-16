@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_consignment_reporting"
+              name="Consignment"
+              parent="sale.menu_sale_report"
+              sequence="50"/>
+
+    <menuitem id="menu_consignment_report_wizard"
+              name="Consignment Report"
+              parent="menu_consignment_reporting"
+              action="action_consignment_report_wizard"
+              sequence="10"/>
+</odoo>

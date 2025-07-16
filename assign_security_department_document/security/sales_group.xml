@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Department Document group -->
+        <record id="group_department" model="res.groups">
+            <field name="name">Department Document</field>
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        </record>
+
+        <record id="sales_team.group_sale_salesman_all_leads" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('assign_security_department_document.group_department'))]"/>
+        </record>
+
+        <!-- Record rule for same department access -->
+        <record id="sale_order_same_department_rule" model="ir.rule">
+            <field name="name">Sales Order: Same Department Access</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="domain_force">
+                [
+                ('department_id', '=', user.department_id.id)
+                ]
+            </field>
+            <field name="groups" eval="[(4, ref('assign_security_department_document.group_department'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Record rule for same department access - Sale Order Line -->
+        <record id="sale_order_line_same_department_rule" model="ir.rule">
+            <field name="name">Sales Order Line: Same Department Access</field>
+            <field name="model_id" ref="sale.model_sale_order_line"/>
+            <field name="domain_force">
+                [
+                ('order_id.department_id', '=', user.department_id.id)
+                ]
+            </field>
+            <field name="groups" eval="[(4, ref('assign_security_department_document.group_department'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+    </data>
+</odoo>

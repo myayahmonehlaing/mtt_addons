@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="access_account_move_department_document" model="ir.model.access">
+            <field name="name">Account Move Department Document Access</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="group_id" ref="assign_security_department_document.group_department_accounting"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_account_move_line_department_document" model="ir.model.access">
+            <field name="name">Account Move Line Department Document Access</field>
+            <field name="model_id" ref="account.model_account_move_line"/>
+            <field name="group_id" ref="assign_security_department_document.group_department_accounting"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_sale_order_department_document" model="ir.model.access">
+            <field name="name">Sale Order Department Document Access</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="group_id" ref="assign_security_department_document.group_department_accounting"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_sale_order_line_department_document" model="ir.model.access">
+            <field name="name">Sale Order Line Department Document Access</field>
+            <field name="model_id" ref="sale.model_sale_order_line"/>
+            <field name="group_id" ref="assign_security_department_document.group_department_accounting"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+
+        <record id="access_account_journal_department_document" model="ir.model.access">
+            <field name="name">Account Journal Department Document Access</field>
+            <field name="model_id" ref="account.model_account_journal"/>
+            <field name="group_id" ref="assign_security_department_document.group_department_accounting"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!--        For Sale Orders Option Permission ( 3 access rights)-->
+        <record id="access_sale_order_option_department_document" model="ir.model.access">
+            <field name="name">Sale Order Option Department Document Access</field>
+            <field name="model_id" ref="sale_management.model_sale_order_option"/>
+            <field name="group_id" ref="assign_security_department_document.group_department_accounting"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_sale_order_spreadsheet_department_document" model="ir.model.access">
+            <field name="name">Sale Order Spreadsheet Department Document Access</field>
+            <field name="model_id" ref="spreadsheet_sale_management.model_sale_order_spreadsheet"/>
+            <field name="group_id" ref="assign_security_department_document.group_department_accounting"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_sale_order_template_department_document" model="ir.model.access">
+            <field name="name">Sale Order Template Department Document Access</field>
+            <field name="model_id" ref="sale_management.model_sale_order_template"/>
+            <field name="group_id" ref="assign_security_department_document.group_department_accounting"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+<!--        <record id="access_account_payment_department_accounting_read" model="ir.model.access">-->
+<!--            <field name="name">Account Payment Read Access for Department Accounting</field>-->
+<!--            <field name="model_id" ref="account.model_account_payment"/>-->
+<!--            <field name="group_id" ref="assign_security_department_document.group_department_accounting"/>-->
+<!--            <field name="perm_read" eval="1"/>-->
+<!--            <field name="perm_write" eval="0"/>-->
+<!--            <field name="perm_create" eval="0"/>-->
+<!--            <field name="perm_unlink" eval="0"/>-->
+<!--        </record>-->
+
+
+    </data>
+</odoo>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Report Action -->
+    <record id="action_report_consignment" model="ir.actions.report">
+        <field name="name">Consignment Report</field>
+        <field name="model">assign.consignment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">assign_consignment.report_consignment_template_all</field>
+        <field name="report_file">assign_consignment.report_consignment_template_all</field>
+        <field name="print_report_name">'Consignment - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_assign_consignment"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Report Template -->
+    <template id="report_consignment_template_all">
+        <t t-call="web.external_layout">
+            <main class="page">
+                <t t-foreach="docs" t-as="doc">
+                    <h2>Consignment:
+                        <span t-field="doc.name"/>
+                    </h2>
+                    <p>
+                        <strong>Partner:</strong>
+                        <span t-field="doc.partner_id"/>
+                    </p>
+                    <p>
+                        <strong>Date:</strong>
+                        <span t-field="doc.date"/>
+                    </p>
+                    <p>
+                        <strong>Picking Reference:</strong>
+                        <span t-field="doc.picking_id.name"/>
+                    </p>
+
+                    <h4 style="background-color: #2E86C1; color: white; padding: 4px;">Order Lines</h4>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Sold</th>
+                                <th>Remaining</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.order_line_ids" t-as="line">
+                                <tr>
+                                    <td>
+                                        <span t-field="line.product_id"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.quantity"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.amount_sold"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.remaining_qty"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.price_unit"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.price_total"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <p style="text-align: right; font-weight: bold;">
+                        Total Amount:
+                        <span t-field="doc.amount_total"
+                              t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                    </p>
+                </t>
+            </main>
+        </t>
+    </template>
+</odoo>

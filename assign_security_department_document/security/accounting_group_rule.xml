@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Access Rule for Department Documents -->
+    <record id="account_invoice_post_rule" model="ir.rule">
+        <field name="name">Department Invoice Post Rule</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="domain_force">[('department_id', '=', user.department_id.id)]</field>
+        <field name="groups" eval="[(4, ref('assign_security_department_document.group_department_accounting'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+
+    </record>
+
+    <record id="account_move_line_department_rule" model="ir.rule">
+        <field name="name">Account Move Line - Same Department</field>
+        <field name="model_id" ref="account.model_account_move_line"/>
+        <field name="domain_force">[('move_id.department_id', '=', user.department_id.id)]</field>
+        <field name="groups" eval="[(4, ref('assign_security_department_document.group_department_accounting'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+</odoo>
