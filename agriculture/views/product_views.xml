@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_agriculture_crop" model="ir.actions.act_window">
+        <field name="name">Crops</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('is_crop', '=', True)]</field>
+        <field name="context">{'default_is_crop': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Product!
+            </p>
+        </field>
+    </record>
+
+
+    <record id="action_agriculture_seed" model="ir.actions.act_window">
+        <field name="name">Seeds</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('is_seed', '=', True)]</field>
+        <field name="context">{'default_is_seed': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Product!
+            </p>
+        </field>
+    </record>
+
+
+    <record id="action_agriculture_expense" model="ir.actions.act_window">
+        <field name="name">Expenses</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('is_expense', '=', True)]</field>
+        <field name="context">
+            {'default_is_expense': True, 'default_standard_price': 1.0,'default_type':'service'}
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Product!
+            </p>
+        </field>
+    </record>
+
+
+    <record id="action_agriculture_input_product" model="ir.actions.act_window">
+        <field name="name">Input Product</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[
+            ('is_crop', '=', False),
+            ('is_seed', '=', False),
+            ('is_expense', '=', False)
+            ]
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Product!
+            </p>
+        </field>
+    </record>
+
+
+</odoo>

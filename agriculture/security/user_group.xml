@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="agriculture_module_category" model="ir.module.category">
+            <field name="name">Agriculture</field>
+        </record>
+
+        <record id="agriculture_group_farmer" model="res.groups">
+            <field name="name">Farmer</field>
+            <field name="category_id" ref="agriculture_module_category"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+
+        <record id="agriculture_group_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="agriculture_module_category"/>
+            <field name="implied_ids" eval="[(4,ref('agriculture.agriculture_group_farmer'))]"/>
+        </record>
+
+        <record id="agriculture_group_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="agriculture_module_category"/>
+            <field name="implied_ids" eval="[(4,ref('agriculture.agriculture_group_manager'))]"/>
+        </record>
+    </data>
+</odoo>

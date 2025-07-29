@@ -1,0 +1,10 @@
+from .import agriculture
+from .import agriculture_farmer
+from .import agriculture_field
+from .import agriculture_stage
+from .import product_template
+from .import agriculture_planting
+from .import agriculture_input
+from .import mrp_production
+from .import product_product
+from .import account_move

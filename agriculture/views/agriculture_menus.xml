@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <menuitem id="root_menu_agriculture"
+                  name="Agriculture"
+                  web_icon="agriculture,static/description/icon.png"
+                  groups="agriculture_group_farmer"/>
+
+
+        <!--    for agriculture menu-->
+        <menuitem id="menu_agriculture"
+                  name="Agriculture"
+                  parent="root_menu_agriculture"
+                  groups="agriculture_group_farmer"/>
+        <menuitem id="menu_agriculture_planting"
+                  name="Planting"
+                  parent="menu_agriculture"
+                  action="agriculture.action_agriculture_planting"
+                  groups="agriculture_group_farmer"/>
+        <menuitem id="menu_agriculture_farm_input"
+                  name="Farm Input"
+                  parent="menu_agriculture"
+                  action="agriculture.action_agriculture_farm_input"
+                  groups="agriculture_group_farmer"/>
+        <menuitem id="menu_agriculture_production"
+                  name="Production"
+                  parent="menu_agriculture"
+                  action="agriculture.action_agriculture_production"
+                  groups="agriculture_group_manager"/>
+
+
+        <menuitem id="menu_agriculture_billing"
+                  name="Bill"
+                  parent="root_menu_agriculture"
+                  action="agriculture.action_agriculture_billing"
+                  groups="agriculture_group_manager"/>
+
+
+        <!--    for product menu-->
+        <menuitem id="menu_product"
+                  name="Products"
+                  parent="root_menu_agriculture"
+                  groups="agriculture_group_farmer"/>
+        <menuitem id="menu_product_crop"
+                  name="Crops"
+                  parent="menu_product"
+                  action="agriculture.action_agriculture_crop"
+                  groups="agriculture_group_farmer"/>
+        <menuitem id="menu_product_seed"
+                  name="Seeds"
+                  parent="menu_product"
+                  action="agriculture.action_agriculture_seed"
+                  groups="agriculture_group_farmer"/>
+        <menuitem id="menu_product_expense"
+                  name="Expenses"
+                  parent="menu_product"
+                  action="agriculture.action_agriculture_expense"
+                  groups="agriculture_group_farmer"/>
+        <menuitem id="menu_product_input_product"
+                  name="Input Product"
+                  parent="menu_product"
+                  action="agriculture.action_agriculture_input_product"
+                  groups="agriculture_group_farmer"/>
+
+        <menuitem id="menu_agriculture_reporting"
+                  name="Reporting"
+                  parent="root_menu_agriculture"
+                  groups="agriculture_group_admin"
+                  sequence="80"/>
+        <menuitem id="menu_planting_overview_report"
+                  name="Planting Overview"
+                  parent="menu_agriculture_reporting"
+                  action="agriculture.action_planting_overview_report"
+                  groups="agriculture_group_admin"/>
+        <menuitem id="menu_input_overview_report"
+                  name="Input Analyst"
+                  parent="menu_agriculture_reporting"
+                  action="agriculture.action_input_overview_report"
+                  groups="agriculture_group_admin"/>
+
+
+        <!--    for configuration menu-->
+        <menuitem id="menu_configuration"
+                  name="Configuration"
+                  parent="root_menu_agriculture"
+                  groups="agriculture_group_admin"
+                  sequence="90"/>
+        <menuitem id="menu_configuration_farmer"
+                  name="Farmers"
+                  parent="menu_configuration"
+                  action="agriculture.action_agriculture_farmer"
+                  groups="agriculture_group_admin"/>
+        <menuitem id="menu_configuration_field"
+                  name="Fields"
+                  parent="menu_configuration"
+                  action="agriculture.action_agriculture_field"
+                  groups="agriculture_group_admin"/>
+        <menuitem id="menu_configuration_stage"
+                  name="Stage"
+                  parent="menu_configuration"
+                  action="agriculture.action_agriculture_stage"
+                  groups="agriculture_group_admin"/>
+
+    </data>
+</odoo>

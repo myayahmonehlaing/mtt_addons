@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="action_report_agriculture_planting" model="ir.actions.report">
+            <field name="name">Planting Report</field>
+            <field name="model">agriculture.planting</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">agriculture.planting_report_template</field>
+            <field name="report_file">agriculture.planting_report_template</field>
+            <field name="print_report_name">'Planting - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_agriculture_planting"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+        <template id="planting_report_template">
+            <t t-call="web.external_layout">
+                <main class="page">
+                    <t t-foreach="docs" t-as="doc">
+
+                        <div style="padding: 20px; margin-bottom: 20px;">
+                            <h2>
+                                Planting:
+                                <span t-field="doc.name"/>
+                            </h2>
+
+                            <p style="text-align: right;">
+                                <strong>From</strong>
+                                <span t-field="doc.start_date"/>
+                                <strong>to</strong>
+                                <span t-field="doc.end_date"/>
+                            </p>
+                            <br/>
+
+                            <p>
+                                <strong>Status:</strong>
+                                <span t-field="doc.status"/>
+                            </p>
+
+                            <div>
+                                <!-- Row 1 -->
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div style="display: flex;" class="col-auto">
+                                        <strong>Seed:</strong>
+                                        <span style="margin-left: 6px;" t-field="doc.product_id"/>
+                                    </div>
+                                    <div style="display: flex; text-align: right;" class="col">
+                                        <strong>Crop Product:</strong>
+                                        <span style="margin-left: 6px;" t-field="doc.finish_product_id"/>
+                                    </div>
+                                </div>
+
+                                <!-- Row 2 -->
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div style="display: flex;" class="col-auto">
+                                        <strong>Quantity:</strong>
+                                        <span style="margin-left: 6px;" t-field="doc.quantity"/>
+                                        <span style="margin-left: 4px;" t-field="doc.product_uom_id"/>
+                                    </div>
+                                    <div style="display: flex; text-align: right;" class="col">
+                                        <strong>Estimated Quantity:</strong>
+                                        <span style="margin-left: 6px;" t-field="doc.finish_quantity"/>
+                                        <span style="margin-left: 4px;" t-field="doc.finish_product_uom_id"/>
+                                    </div>
+                                </div>
+
+                                <!-- Row 3 -->
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div style="display: flex;" class="col-auto">
+                                        <strong>Farmer:</strong>
+                                        <span style="margin-left: 6px;" t-field="doc.farmer_id"/>
+                                    </div>
+                                    <div style="display: flex; text-align: right;" class="col">
+                                        <strong>Production Quantity:</strong>
+                                        <span style="margin-left: 6px;" t-field="doc.production_quantity"/>
+                                        <span style="margin-left: 4px;" t-field="doc.production_product_uom_id"/>
+                                    </div>
+                                </div>
+
+                                <!-- Row 4 -->
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div style="display: flex;" class="col-auto">
+                                        <strong>Field:</strong>
+                                        <span style="margin-left: 6px;" t-field="doc.field_id"/>
+                                    </div>
+                                    <div></div>
+                                </div>
+                            </div>
+
+                            <br/>
+                            <h4>
+                                Input Line
+                            </h4>
+                            <table class="table table-sm"
+                            >
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Unit</th>
+                                        <th>Description</th>
+                                        <th>Unit Price</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="last_input_id" t-value="None"/>
+                                    <t t-foreach="doc.line_ids" t-as="line">
+                                        <t t-if="line.input_id and line.input_id.id != last_input_id">
+                                            <tr>
+                                                <td colspan="6"
+                                                >
+                                                    <strong>Input Record:</strong>
+                                                    <span t-field="line.input_id.name"/>
+                                                </td>
+                                            </tr>
+                                            <t t-set="last_input_id" t-value="line.input_id.id"/>
+                                        </t>
+                                        <tr>
+                                            <td>
+                                                <span t-field="line.product_id"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.quantity"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.product_uom_id"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.price_unit"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.price_subtotal"
+                                                      t-options="{'widget': 'monetary', 'display_currency': line.currency_id}"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+
+                            <p style="text-align: right; font-weight: bold; margin-top: 10px;">
+                                Total Input Cost:
+                                <span t-field="doc.total"
+                                      t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                            </p>
+                        </div>
+                    </t>
+                </main>
+            </t>
+        </template>
+
+
+    </data>
+</odoo>

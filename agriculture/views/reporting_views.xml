@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="action_planting_overview_report" model="ir.actions.act_window">
+            <field name="name">Planting Overview</field>
+            <field name="res_model">agriculture.planting</field>
+            <field name="view_mode">pivot,graph</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+        </record>
+        <record id="action_input_overview_report" model="ir.actions.act_window">
+            <field name="name">Input Analyst</field>
+            <field name="res_model">agriculture.input.line</field>
+            <field name="view_mode">pivot,graph</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+        </record>
+
+
+    </data>
+</odoo>

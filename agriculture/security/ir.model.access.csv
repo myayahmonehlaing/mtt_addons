@@ -1,0 +1,26 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_agriculture_farmer,access.agriculture.farmer,agriculture.model_agriculture_farmer,base.group_user,1,1,1,1
+access_agriculture_field,access.agriculture.field,agriculture.model_agriculture_field,base.group_user,1,1,1,1
+access_agriculture_stage,access.agriculture.stage,agriculture.model_agriculture_stage,base.group_user,1,1,1,1
+"","","","","","","",""
+access_agriculture_planting_user,access.agriculture.planting.user,agriculture.model_agriculture_planting,agriculture.agriculture_group_farmer,1,1,1,0
+access_agriculture_planting_manager,access.agriculture.planting.manager,agriculture.model_agriculture_planting,agriculture.agriculture_group_manager,1,1,1,0
+access_agriculture_planting_admin,access.agriculture.planting.admin,agriculture.model_agriculture_planting,agriculture.agriculture_group_admin,1,1,1,1
+"","","","","","","",""
+access_agriculture_input_user,access.agriculture.input.user,agriculture.model_agriculture_input,agriculture.agriculture_group_farmer,1,1,1,0
+access_agriculture_input-manager,access.agriculture.input.manager,agriculture.model_agriculture_input,agriculture.agriculture_group_manager,1,1,1,0
+access_agriculture_input_admin,access.agriculture.input.admin,agriculture.model_agriculture_input,agriculture.agriculture_group_admin,1,1,1,1
+"","","","","","","",""
+access_agriculture_input_line_user,access.agriculture.input_line_user,agriculture.model_agriculture_input_line,agriculture.agriculture_group_farmer,1,1,1,0
+access_agriculture_input_line_manager,access.agriculture.input_line_manager,agriculture.model_agriculture_input_line,agriculture.agriculture_group_manager,1,1,1,0
+access_agriculture_input_line_admin,access.agriculture.input_line_admin,agriculture.model_agriculture_input_line,agriculture.agriculture_group_admin,1,1,1,1
+"","","","","","","",""
+access_account_move_manager,access.account.move.manager,account.model_account_move,agriculture.agriculture_group_manager,1,1,1,0
+access_account_move_line_manager,access.account.move.line.manager,account.model_account_move_line,agriculture.agriculture_group_manager,1,1,1,0
+access_account_journal_manager,access.account.journal.manager,account.model_account_journal,agriculture.agriculture_group_manager,1,1,1,0
+access_account_payment_manager,access.account.payment.manager,account.model_account_payment,agriculture.agriculture_group_manager,1,1,1,0
+"","","","","","","",""
+access_mrp_production_farmer,mrp.production access for farmers,model_mrp_production,agriculture.agriculture_group_farmer,1,1,1,0
+access_stock_move_farmer,access.stock.move.farmer,stock.model_stock_move,agriculture.agriculture_group_farmer,1,1,1,0
+access_orderpoint_agriculture_farmer,access.stock.warehouse.orderpoint.agriculture.farmer,stock.model_stock_warehouse_orderpoint,agriculture.agriculture_group_farmer,1,1,1,0
+access_stock_picking_agriculture_farmer,access.stock.picking.agriculture.farmer,stock.model_stock_picking,agriculture.agriculture_group_farmer,1,1,1,0

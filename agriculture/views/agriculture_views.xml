@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+
+    <record id="view_agriculture_planting_form" model="ir.ui.view">
+        <field name="name">agriculture.planting.form</field>
+        <field name="model">agriculture.planting</field>
+        <field name="arch" type="xml">
+            <form string="Planting">
+                <header>
+                    <field name="status" widget="statusbar"/>
+                    <button name="action_confirm"
+                            string="Confirm"
+                            type="object"
+                            class="btn btn-primary"
+                            invisible="status != 'draft'"/>
+                    <button name="action_done"
+                            string="Mark as Done"
+                            type="object"
+                            class="btn btn-primary"
+                            groups="agriculture.agriculture_group_manager"
+                            invisible="status != 'progress'"/>
+                </header>
+
+                <sheet>
+                    <div style="position: absolute;
+            top: 10px;
+            right: 16px;
+            background-color: #28a745;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-weight: 400;
+            font-size: 13px;"
+                         invisible="input_count == 0"
+                    >
+                        <field name="stage_id" options='{"no_open": True}' readonly="1"/>
+                    </div>
+
+
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button"
+                                name="action_view_input"
+                                type="object"
+                                icon="fa-plus">
+                            <field string="Farm Input" name="input_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button"
+                                name="action_view_production"
+                                type="object"
+                                icon="oi-studio"
+                                groups="agriculture.agriculture_group_manager"
+                        >
+                            <field string="Production" name="production_count" widget="statinfo"/>
+
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <!-- Product -->
+                            <field name="product_id" readonly="status != 'draft'"/>
+
+                            <!-- Quantity + UOM (like Sales Price layout) -->
+                            <label for="quantity"/>
+                            <div>
+                                <field name="quantity"
+                                       class="oe_inline"
+                                       readonly="status != 'draft'"/>
+                                <span>
+                                    <field name="product_uom_id"
+                                           class="oe_inline"
+                                           nolabel="1"
+                                           readonly="status != 'draft'"
+                                           style="margin-left: 30px; max-width: 136px"/>
+                                </span>
+                            </div>
+
+                            <!-- Field and Farmer -->
+                            <field name="field_id" readonly="status != 'draft'"/>
+                            <field name="farmer_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="finish_product_id" readonly="status != 'draft'"/>
+                            <label for="finish_quantity"/>
+                            <div>
+                                <field name="finish_quantity"
+                                       class="oe_inline"
+                                       readonly="status != 'draft'"/>
+                                <span>
+                                    <field name="finish_product_uom_id"
+                                           class="oe_inline"
+                                           nolabel="1"
+                                           readonly="status != 'draft'"
+                                           style="margin-left: 30px; max-width: 136px"/>
+                                </span>
+                            </div>
+
+                            <field name="start_date" readonly="status != 'draft'"/>
+                            <field name="end_date" readonly="status != 'draft'"/>
+                            <field name="company_id" invisible="1"/>
+                            <label for="production_quantity"/>
+                            <div>
+                                <field name="production_quantity"
+                                       class="oe_inline"
+                                       readonly="1"/>
+                                <span>
+                                    <field name="production_product_uom_id"
+                                           class="oe_inline"
+                                           nolabel="1"
+                                           readonly="1"
+                                           style="margin-left: 30px; max-width: 136px"/>
+                                </span>
+                            </div>
+                        </group>
+                    </group>
+
+                </sheet>
+                <chatter>
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </chatter>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_agriculture_planting_list" model="ir.ui.view">
+        <field name="name">agriculture.planting.list</field>
+        <field name="model">agriculture.planting</field>
+        <field name="arch" type="xml">
+            <list string="Plantings" default_order="name desc">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="farmer_id"/>
+                <field name="field_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="status"/>
+                <field name="company_id"/>
+
+            </list>
+        </field>
+    </record>
+    <record id="view_agriculture_planting_kanban" model="ir.ui.view">
+        <field name="name">agriculture.planting.kanban</field>
+        <field name="model">agriculture.planting</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column" default_order="name desc">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_details">
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                                <div>🌱
+                                    <field name="product_id"/>
+                                </div>
+                                <div>📍
+                                    <field name="field_id"/>
+                                </div>
+                                <div>👨‍🌾
+                                    <field name="farmer_id"/>
+                                </div>
+                                <div>📦
+                                    <field name="quantity"/>
+                                    <field name="product_uom_id"/>
+                                </div>
+                                <div>📆
+                                    <field name="start_date"/>
+                                    →
+                                    <field name="end_date"/>
+                                </div>
+                                <div>Status:
+                                    <field name="status"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="view_agriculture_planting_search" model="ir.ui.view">
+        <field name="name">agriculture.planting.search</field>
+        <field name="model">agriculture.planting</field>
+        <field name="arch" type="xml">
+            <search string="Planting Search">
+                <!-- Basic filters -->
+                <field name="name"/>
+                <field name="status"/>
+                <field name="stage_id"/>
+                <field name="product_id" string="Crop"/>
+                <field name="finish_product_id" string="Finish Product"/>
+                <field name="farmer_id"/>
+                <field name="field_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+
+                <!-- Grouping options -->
+                <group expand="0" string="Group By">
+                    <filter name="group_by_status" string="Status" domain="[]" context="{'group_by': 'status'}"/>
+                    <filter name="group_by_stage" string="Stage" domain="[]" context="{'group_by': 'stage_id'}"/>
+                    <filter name="group_by_crop" string="Crop" domain="[]" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_by_farmer" string="Farmer" domain="[]" context="{'group_by': 'farmer_id'}"/>
+                    <filter name="group_by_field" string="Field" domain="[]" context="{'group_by': 'field_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="view_agriculture_planting_calendar" model="ir.ui.view">
+        <field name="name">agriculture.planting.calendar</field>
+        <field name="model">agriculture.planting</field>
+        <field name="arch" type="xml">
+            <calendar string="Planting Calendar"
+                      date_start="start_date"
+                      date_stop="end_date"
+                      color="product_id"
+                      mode="month">
+                <field name="name"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_agriculture_planting_pivot" model="ir.ui.view">
+        <field name="name">agriculture.planting.pivot</field>
+        <field name="model">agriculture.planting</field>
+        <field name="arch" type="xml">
+            <pivot string="Planting Summary">
+                <field name="quantity" type="measure"/>
+                <field name="finish_quantity" type="measure"/>
+                <field name="production_quantity" type="measure"/>
+
+                <field name="finish_product_id" type="col"/>
+                <field name="farmer_id" type="row"/>
+                <field name="field_id" type="row"/>
+                <field name="start_date" interval="month" type="col"/>
+                <field name="status" type="row"/>
+                <field name="company_id" invisible="1"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_agriculture_planting_graph" model="ir.ui.view">
+        <field name="name">agriculture.planting.graph</field>
+        <field name="model">agriculture.planting</field>
+        <field name="arch" type="xml">
+            <graph string="Planting Analytics" type="bar">
+                <field name="finish_quantity" type="measure"/>
+                <field name="production_quantity" type="measure"/>
+                <field name="product_id" type="row"/>
+                <field name="farmer_id" type="row"/>
+                <field name="start_date" interval="month" type="col"/>
+                <field name="status" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+
+    <record id="action_agriculture_planting" model="ir.actions.act_window">
+        <field name="name">Planting</field>
+        <field name="res_model">agriculture.planting</field>
+        <field name="view_mode">list,kanban,calendar,pivot,graph,search,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new CV form!
+            </p>
+        </field>
+    </record>
+
+
+    _______________________________________________________
+    _______________________________________________________
+    _____________________Farm Input________________________
+
+
+    <record id="view_agriculture_input_form" model="ir.ui.view">
+        <field name="name">agriculture.input.form</field>
+        <field name="model">agriculture.input</field>
+        <field name="arch" type="xml">
+            <form string="Farm Input">
+                <header>
+                    <field name="is_checked" invisible="1"/>
+                    <field name="status" widget="statusbar"/>
+                    <button name="action_confirm"
+                            string="Confirm"
+                            type="object"
+                            class="btn btn-primary"
+                            invisible="status != 'draft'"/>
+                    <button name="action_create_bill"
+                            string="Create Bill"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="status != 'confirmed' or is_checked"
+                            groups="agriculture.agriculture_group_manager"
+
+                    />
+
+                    <button name="action_done"
+                            string="Mark as Done"
+                            type="object"
+                            class="btn btn-primary"
+                            invisible="status != 'confirmed'"
+                            groups="agriculture.agriculture_group_manager"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button class="oe_stat_button"
+                                name="action_view_planting"
+                                type="object"
+                                icon="fa-calendar"
+                                invisible="planting_count == 0">
+                            <field string="Planting" name="planting_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button"
+                                name="action_view_bill"
+                                type="object"
+                                icon="fa-pencil-square-o"
+                                invisible="bill_count == 0"
+                                groups="agriculture.agriculture_group_manager"
+                        >
+                            <field string="Vendor Bill" name="bill_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button"
+                                name="action_view_production"
+                                type="object"
+                                icon="oi-studio"
+                                groups="agriculture.agriculture_group_manager"
+                        >
+                            <field string="Production" name="production_count" widget="statinfo"/>
+                        </button>
+
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="planting_id" readonly="status != 'draft'"/>
+                            <field name="stage_id" domain="[('product_id', '=', product_id)]" readonly="status != 'draft'"/>
+                            <field name="product_id" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="date" readonly="status != 'draft'"/>
+                            <field name="field_id" readonly="1"/>
+                            <field name="farmer_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="company_id" invisible="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Input Lines">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="product_uom_id"/>
+                                    <field name="price_unit" nolabel="1" invisible="1"/>
+                                    <field name="name"/>
+                                    <field name="currency_id" nolabel="1" invisible="1"/>
+                                    <field name="price_subtotal" readonly="1"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="total" widget="monetary" string="Amount Total"/>
+                            </group>
+
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter>
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </chatter>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_agriculture_input_list" model="ir.ui.view">
+        <field name="name">agriculture.input.list</field>
+        <field name="model">agriculture.input</field>
+        <field name="arch" type="xml">
+            <list string="Farm Inputs" default_order="name desc">
+                <field name="name"/>
+                <field name="planting_id"/>
+                <field name="stage_id"/>
+                <field name="date"/>
+                <field name="status"/>
+                <field name="company_id"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="view_agriculture_input_calendar" model="ir.ui.view">
+        <field name="name">agriculture.input.calendar</field>
+        <field name="model">agriculture.input</field>
+        <field name="arch" type="xml">
+            <calendar string="Input Calendar"
+                      color="product_id"
+                      date_start="date"
+                      mode="month">
+                <field name="name"/>
+            </calendar>
+        </field>
+    </record>
+    <record id="view_agriculture_input_kanban" model="ir.ui.view">
+        <field name="name">agriculture.input.kanban</field>
+        <field name="model">agriculture.input</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column" default_order="name desc">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <div class="oe_kanban_details">
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                                <div>🌱
+                                    <field name="planting_id"/>
+                                </div>
+                                <div>📅
+                                    <field name="date"/>
+                                </div>
+                                <div>🎯
+                                    <field name="stage_id"/>
+                                </div>
+                                <div>Status:
+                                    <field name="status"/>
+                                </div>
+                                <div>💰
+                                    <field name="total" widget="monetary"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_agriculture_input_pivot" model="ir.ui.view">
+        <field name="name">agriculture.input.pivot</field>
+        <field name="model">agriculture.input</field>
+        <field name="arch" type="xml">
+            <pivot string="Input Pivot">
+                <field name="product_id" type="row"/>
+                <field name="field_id" type="row"/>
+                <field name="farmer_id" type="row"/>
+                <field name="quantity" type="measure"/>
+                <field name="total" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_agriculture_input_graph" model="ir.ui.view">
+        <field name="name">agriculture.input.graph</field>
+        <field name="model">agriculture.input</field>
+        <field name="arch" type="xml">
+            <graph string="Input Overview" type="bar">
+                <field name="product_id" type="row"/>
+                <field name="quantity" type="measure"/>
+                <field name="total" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+
+    <record id="view_agriculture_input_search" model="ir.ui.view">
+        <field name="name">agriculture.input.search</field>
+        <field name="model">agriculture.input</field>
+        <field name="arch" type="xml">
+            <search string="Farm Input Search">
+                <!-- Searchable fields -->
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="field_id"/>
+                <field name="farmer_id"/>
+                <field name="planting_id"/>
+                <field name="stage_id"/>
+                <field name="date"/>
+
+                <!-- Filters -->
+                <filter string="Has Planting" name="has_planting" domain="[('planting_id', '!=', False)]"/>
+                <filter string="No Planting" name="no_planting" domain="[('planting_id', '=', False)]"/>
+
+                <!-- Group By options -->
+                <group expand="0" string="Group By">
+                    <filter name="group_by_field" string="Field" context="{'group_by': 'field_id'}"/>
+                    <filter name="group_by_farmer" string="Farmer" context="{'group_by': 'farmer_id'}"/>
+                    <filter name="group_by_crop" string="Crop" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_by_stage" string="Stage" context="{'group_by': 'stage_id'}"/>
+                    <filter name="group_by_planting" string="Planting" context="{'group_by': 'planting_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="action_agriculture_farm_input" model="ir.actions.act_window">
+        <field name="name">Farm Input</field>
+        <field name="res_model">agriculture.input</field>
+        <field name="view_mode">list,kanban,calendar,pivot,graph,search,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new CV form!
+            </p>
+        </field>
+    </record>
+
+
+    ____________________________________________________________________
+    ________________________________________________________________________
+    ___________________________Production___________________________________
+    ________________________________________________________________________
+    ________________________________________________________________________
+
+
+    <record id="action_agriculture_production" model="ir.actions.act_window">
+        <field name="name">Production</field>
+        <field name="res_model">mrp.production</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('planting_id', '!=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new CV form!
+            </p>
+        </field>
+    </record>
+
+    <record id="action_agriculture_billing" model="ir.actions.act_window">
+        <field name="name">Bill</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('move_type', '=', 'in_invoice')]</field>
+        <field name="context">{'default_move_type': 'in_invoice'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new CV form!
+            </p>
+        </field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="agriculture_farmer_company_rule" model="ir.rule">
+            <field name="name">Agriculture Farmer: Multi-Company</field>
+            <field name="model_id" ref="agriculture.model_agriculture_farmer"/>
+            <field name="domain_force">[('company_id', 'in',company_ids)]</field>
+            <field name="groups" eval="[(4, ref('agriculture.agriculture_group_farmer'))]"/>
+        </record>
+
+        <record id="agriculture_field_company_rule" model="ir.rule">
+            <field name="name">Agriculture Field: Multi-Company</field>
+            <field name="model_id" ref="agriculture.model_agriculture_field"/>
+            <field name="domain_force">[('company_id', 'in',company_ids)]</field>
+
+        </record>
+
+        <record id="agriculture_stage_company_rule" model="ir.rule">
+            <field name="name">Agriculture Stage: Multi-Company</field>
+            <field name="model_id" ref="agriculture.model_agriculture_stage"/>
+            <field name="domain_force">[('company_id', 'in',company_ids)]</field>
+
+        </record>
+
+        <record id="agriculture_planting_company_rule" model="ir.rule">
+            <field name="name">Agriculture Planting: Multi-Company</field>
+            <field name="model_id" ref="agriculture.model_agriculture_planting"/>
+            <field name="domain_force">[('company_id', 'in',company_ids)]</field>
+
+        </record>
+
+        <record id="agriculture_input_company_rule" model="ir.rule">
+            <field name="name">Agriculture Farm Input: Multi-Company</field>
+            <field name="model_id" ref="agriculture.model_mrp_production"/>
+            <field name="domain_force">[('company_id', 'in',company_ids)]</field>
+
+        </record>
+
+        <record id="agriculture_product_company_rule" model="ir.rule">
+            <field name="name">Agriculture Product: Multi-Company</field>
+            <field name="model_id" ref="agriculture.model_product_template"/>
+            <field name="domain_force">[('company_id', 'in',company_ids)]</field>
+
+        </record>
+
+        <record id="agriculture_planting_rule_own_farmer" model="ir.rule">
+            <field name="name">Planting: Only Show Related Farmer Records</field>
+            <field name="model_id" ref="agriculture.model_agriculture_planting"/>
+            <field name="domain_force">[('farmer_id.user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('agriculture.agriculture_group_farmer'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record id="agriculture_planting_rule_own_field" model="ir.rule">
+            <field name="name">Planting: Only Show Related Manager Records</field>
+            <field name="model_id" ref="agriculture.model_agriculture_planting"/>
+            <field name="domain_force">[('field_id.user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('agriculture.agriculture_group_manager'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record id="agriculture_planting_rule_admin" model="ir.rule">
+            <field name="name">Planting: Administration</field>
+            <field name="model_id" ref="agriculture.model_agriculture_planting"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('agriculture.agriculture_group_admin'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+
+        <record id="agriculture_farm_input_rule_own_farmer" model="ir.rule">
+            <field name="name">Farm Input: Only Show Related Farmer Records</field>
+            <field name="model_id" ref="agriculture.model_agriculture_input"/>
+            <field name="domain_force">[('farmer_id.user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('agriculture.agriculture_group_farmer'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record id="agriculture_farm_input_rule_own_field" model="ir.rule">
+            <field name="name">Farm Input: Only Show Related Manager Records</field>
+            <field name="model_id" ref="agriculture.model_agriculture_input"/>
+            <field name="domain_force">[('field_id.user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('agriculture.agriculture_group_manager'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record id="agriculture_farm_input_rule_admin" model="ir.rule">
+            <field name="name">Farm Input: Administration</field>
+            <field name="model_id" ref="agriculture.model_agriculture_input"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('agriculture.agriculture_group_admin'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+
+
+        <record id="agriculture_farm_production_own_field" model="ir.rule">
+            <field name="name">Production: Only Show Related Manager Records</field>
+            <field name="model_id" ref="mrp.model_mrp_production"/>
+            <field name="domain_force">[('field_id.user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('agriculture.agriculture_group_manager'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record id="agriculture_production_rule_admin" model="ir.rule">
+            <field name="name">Production: Administration</field>
+            <field name="model_id" ref="mrp.model_mrp_production"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('agriculture.agriculture_group_admin'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+
+        <record id="agriculture_farm_billing_own_field" model="ir.rule">
+            <field name="name">Billing: Only Show Related Manager Records</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="domain_force">[('billing_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('agriculture.agriculture_group_manager'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record id="agriculture_farm_billing_line_own_field" model="ir.rule">
+            <field name="name">Billing Line: Only Show Related Manager Records</field>
+            <field name="model_id" ref="account.model_account_move_line"/>
+            <field name="domain_force">[('move_id.billing_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('agriculture.agriculture_group_manager'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record id="agriculture_billing_rule_admin" model="ir.rule">
+            <field name="name">Billing: Administration</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('agriculture.agriculture_group_admin'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+
+
+    </data>
+
+
+</odoo>
